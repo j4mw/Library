@@ -20,7 +20,7 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
-    <script src="script.js"></script>
+    
     <title>Library</title>
   </head>
   <body>
@@ -60,8 +60,7 @@
         <p class="lead mb-4">
           Add books to your library by entering title, author and number of
           pages. ISBN entry will add bookcover image. Books can be marked as
-          read, which will cause the book to grey out and added to tally. Books
-          can also be deleted from list.
+          read, which will cause the book to grey out.
         </p>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
           <button type="button" class="btn btn-primary btn-lg px-4 gap-3">
@@ -72,40 +71,16 @@
     </div>
 
     <article>
-      <div class="container">
+      <div class="container ">
         <div
-          class="d-flex flex-wrap align-items-center justify-content-center gap-5"
+          class="d-flex flex-wrap align-items-center justify-content-center gap-5 card-container"
         >
-          <div class="card" style="width: 13rem">
-            <img
-              src="https://covers.openlibrary.org/b/isbn/9780547928227-L.jpg"
-              class="card-img-top"
-              alt="..."
-            />
-            <div class="card-body">
-              <h5 class="card-title title">The Hobbit</h5>
-              <p class="card-text author">J.R.R. Tolkien</p>
-              <p class="card-text pages">300 pages</p>
-              <p class="card-text isbn">9780547928227</p>
-              <p class="btn btn-danger">Delete</p>
-            </div>
-          </div>
-          <div class="card" style="width: 13rem">
-            <img
-              src="https://covers.openlibrary.org/b/isbn/978-0007548231-L.jpg"
-              class="card-img-top"
-              alt="..."
-            />
-            <div class="card-body">
-              <h5 class="card-title title">A Game of Thrones</h5>
-              <p class="card-text author">George R.R. Martin</p>
-              <p class="card-text pages">912 pages</p>
-              <p class="card-text isbn">978-0007548231</p>
-              <p class="btn btn-danger">Delete</p>
-            </div>
-          </div>
+          
         </div>
       </div>
     </article>
+    </div>
+    <script src="script.js"></script>
   </body>
+  
 </html>
