@@ -55,7 +55,7 @@ function createBook(book) {
   let cardISBN = document.createElement("p");
   cardISBN.className = "card-text isbn";
   cardISBN.textContent = book.isbn;
-  let cardAmzn = document.createElement("p");
+  let cardAmzn = document.createElement("a");
   cardAmzn.className = "btn btn-warning";
   cardAmzn.style =
     "width: 72px; height:38px;padding: 6px 12px;margin: 0px 0px 16px";
