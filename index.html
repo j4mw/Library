@@ -88,17 +88,17 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label d-flex"># of pages</label>
-                        <input type="number" class="form-control" id="bookPages" name="bookPages" placeholder="" />
+                        <input type="number" class="form-control" id="bookPages" name="bookPages" placeholder="" pattern="^[+]?\d+([.]\d+)?$"/>
                     </div>
                     <div class="mb-3">
                         <label class="form-label d-flex">ISBN</label>
-                        <input type="number" class="form-control" id="bookISBN" name="bookISBN" placeholder="" pattern="" />
+                        <input type="number" class="form-control" id="bookISBN" name="bookISBN" placeholder="" pattern="^(97(8|9))?\d{9}(\d|X)$" />
                     </div>
                 </form>
             </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Add Book</button>
+                  <button type="button" class="btn btn-primary" data-submit>Add Book</button>
                 </div>
               </div>
             </div>

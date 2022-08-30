@@ -1,3 +1,4 @@
+// CONSTRUCTOR
 function Book(title, author, pages, isbn, bookRead) {
   this.title = title;
   this.author = author;
@@ -6,6 +7,7 @@ function Book(title, author, pages, isbn, bookRead) {
   this.bookRead = bookRead;
 }
 
+// EXAMPLE CARDS TO DELETE
 const userBook1 = new Book(
   "The Hobbit",
   "J.R.R. Tolkien",
@@ -22,19 +24,40 @@ const userBook2 = new Book(
   false
 );
 
-let myLibrary = [userBook1, userBook2];
+// sets user library to blank on first load
+let userLibrary = [];
+// default library to load if error
+let exampleLibrary = [userBook1, userBook2];
 
+// will load from local storage when page loads it will also append cards based on userLibrary array
 function updateLibrary() {
-  for (let i = 0; i < myLibrary.length; i += 1) {
-    createBook(myLibrary[i]);
+  checkLocalStorage();
+  document.getElementsByClassName("card-container")[0].innerHTML = "";
+  for (let i = 0; i < userLibrary.length; i += 1) {
+    createBook(userLibrary[i]);
   }
 }
 
-function addBookToLibrary() {}
+// reads info from modal and adds to new Book
+function addBookToLibrary() {
+  const bookTitle = document.getElementById("bookTitle").value;
+  console.log(bookTitle);
+  const bookAuthor = document.getElementById("bookAuthor").value;
+  console.log(bookAuthor);
+  const bookPages = document.getElementById("bookPages").value;
+  console.log(bookPages);
+  const bookISBN = document.getElementById("bookISBN").value;
+  console.log(bookISBN);
 
+  const userBook = new Book(bookTitle, bookAuthor, bookPages, bookISBN, false);
+  userLibrary.push(userBook);
+  updateLocalStorage();
+  updateLibrary();
+}
+
+// creates a bookcard based on array information
 function createBook(book) {
-  let cardContainer;
-  cardContainer = document.getElementsByClassName("card-container");
+  let cardContainer = document.getElementsByClassName("card-container");
   // card create
   let card = document.createElement("div");
   card.className = "card";
@@ -72,7 +95,7 @@ function createBook(book) {
   cardAmzn.href = `https://www.amazon.co.uk/s?k=${book.isbn}&crid=RW6V6ZLAA408&sprefix=978-0007548231%2Caps%2C97&ref=nb_sb_noss`;
   // card delete button
   let cardDelete = document.createElement("p");
-  cardDelete.className = "btn btn-danger";
+  cardDelete.className = "btn btn-danger deleteBtn";
   cardDelete.textContent = "Delete";
   cardDelete.style =
     "width: 72px; height:38px;padding: 6px 12px;margin: 0px 0px 16px";
@@ -89,4 +112,39 @@ function createBook(book) {
   cardContainer[0].appendChild(card);
 }
 
+// TODO delete from array
+function deleteFromLibrary(array, e) {
+  let index = array.indexOf(e);
+  console.log(index);
+}
+
+// START UP
+// let myLibrary = [userBook1, userBook2];
+
+// saves userLibrary array to localstorage
+function updateLocalStorage() {
+  localStorage.setItem("userLibrary", JSON.stringify(userLibrary));
+}
+
+// will check local storage and then load to userlLibrary array
+function checkLocalStorage() {
+  if (localStorage.getItem("userLibrary")) {
+    userLibrary = JSON.parse(localStorage.getItem("userLibrary"));
+  } else userLibrary = exampleLibrary;
+}
+// RUN AT START
 updateLibrary();
+
+// EVENT LISTENERS
+const deleteBook = document.querySelectorAll(".deleteBtn");
+deleteBook.forEach((deleteBtn) => {
+  deleteBtn.addEventListener("click", (e) => {
+    deleteFromLibrary(userLibrary, e);
+  });
+});
+
+const addBookSubmit = document.querySelector("[data-submit]");
+
+addBookSubmit.addEventListener("click", () => {
+  addBookToLibrary();
+});
