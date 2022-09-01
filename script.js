@@ -34,6 +34,7 @@ function updateLibrary() {
   checkLocalStorage();
   document.getElementsByClassName("card-container")[0].innerHTML = "";
   for (let i = 0; i < userLibrary.length; i += 1) {
+    // TODO add id check
     createBook(userLibrary[i]);
   }
 }
@@ -52,6 +53,7 @@ function addBookToLibrary() {
   const userBook = new Book(bookTitle, bookAuthor, bookPages, bookISBN, false);
   userLibrary.push(userBook);
   updateLocalStorage();
+  checkLocalStorage();
   updateLibrary();
 }
 
@@ -92,7 +94,7 @@ function createBook(book) {
   cardAmzn.style =
     "width: 100px; height:38px;padding: 6px 12px;margin: 0px 0px 16px 16px;";
   cardAmzn.textContent = "Amazon";
-  cardAmzn.href = `https://www.amazon.co.uk/s?k=${book.isbn}&crid=RW6V6ZLAA408&sprefix=978-0007548231%2Caps%2C97&ref=nb_sb_noss`;
+  cardAmzn.href = `https://www.amazon.co.uk/s?k=${book.title}&crid=RW6V6ZLAA408&sprefix=978-0007548231%2Caps%2C97&ref=nb_sb_noss`;
   // card delete button
   let cardDelete = document.createElement("p");
   cardDelete.className = "btn btn-danger deleteBtn";
@@ -110,16 +112,31 @@ function createBook(book) {
   cardBody.appendChild(cardAmzn);
   // appending card to container
   cardContainer[0].appendChild(card);
-}
 
-// TODO delete from array
-function deleteFromLibrary(array, e) {
-  let index = array.indexOf(e);
-  console.log(index);
+  const deleteBook = document.querySelectorAll(".deleteBtn");
+  deleteBook.forEach((deleteBtn) => {
+    deleteBtn.addEventListener("click", (e) => {
+      const currentTargetTitle = e.target.parentNode.childNodes[0].textContent;
+      const currentTargetAuthor = e.target.parentNode.childNodes[1].textContent;
+      console.log(currentTargetTitle);
+      console.log(currentTargetAuthor);
+      console.log(userLibrary);
+      for (let book of userLibrary) {
+        if (
+          book.title == currentTargetTitle &&
+          book.author == currentTargetAuthor
+        ) {
+          let currentTargetIndex = userLibrary.indexOf(book);
+          console.log(currentTargetIndex);
+          userLibrary.splice(currentTargetIndex, currentTargetIndex + 1);
+          updateLocalStorage();
+          checkLocalStorage();
+          updateLibrary();
+        }
+      }
+    });
+  });
 }
-
-// START UP
-// let myLibrary = [userBook1, userBook2];
 
 // saves userLibrary array to localstorage
 function updateLocalStorage() {
@@ -136,15 +153,11 @@ function checkLocalStorage() {
 updateLibrary();
 
 // EVENT LISTENERS
-const deleteBook = document.querySelectorAll(".deleteBtn");
-deleteBook.forEach((deleteBtn) => {
-  deleteBtn.addEventListener("click", (e) => {
-    deleteFromLibrary(userLibrary, e);
-  });
-});
 
 const addBookSubmit = document.querySelector("[data-submit]");
 
 addBookSubmit.addEventListener("click", () => {
   addBookToLibrary();
 });
+
+// TODO event listener to check conflicting ISBN
